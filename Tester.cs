@@ -1044,5 +1044,68 @@ namespace BitFab.KW1281Test
 
             return (b1, b2);
         }
+
+        internal static void TestBestBoudRate(string portName, int baudRate , int controllerAddress)
+        {
+            const int length = 3;
+            var avilableBoudRate = new int[] { 10400, 9600,7200, 4800, 2400,1800,  1200 ,600 , 300 };
+            var testResults = new Dictionary<int, int>() { { 10400, 0 },{ 9600,0 },{ 7200, 0 }, { 4800, 0 }, { 2400, 0 }, { 1800, 0 }, { 1200, 0 }, { 600, 0 }, { 300 ,0 }, };
+            for (int i = 0; i < length; i++)
+            {
+
+
+                foreach (var boudRate in avilableBoudRate)
+                {
+                    Console.ForegroundColor= ConsoleColor.Green;
+                    Log.WriteLine($"testing boudrate {boudRate}");
+                    Console.ResetColor();
+                    using var genericInterface = new GenericInterface(portName, baudRate);
+                    try
+                    {
+                        var tester = new Tester(genericInterface, controllerAddress);
+                         ControllerInfo ecuInfo = tester.Kwp1281Wakeup();
+                       /* var kwpVersion = _kwpCommon.WakeUp((byte)_controllerAddress, evenParityWakeup);
+
+                        if (kwpVersion != 1281)
+                        {
+                            throw new InvalidOperationException("Expected KWP1281 protocol.");
+                        }*/
+
+                    }
+                    catch (Exception ex)
+                    {
+
+                        Log.WriteLine($"Kwp1281Wakeup exception {ex}");
+                        continue;
+                    }
+
+                    testResults[boudRate]++;
+
+                }
+                break;
+            }
+
+            Log.WriteLine($"Kwp1281Wakeup results");
+            foreach (var item in testResults)
+            {
+                if (item.Value == length)
+                {
+                    Console.ForegroundColor = ConsoleColor.Green;
+                }
+                else if (item.Value == 0)
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                }
+                else
+                {
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                }
+
+                Log.WriteLine($"boudrate {item.Key} : {item.Value / length *100}%");
+
+                Console.ResetColor();
+            }
+            Console.ReadLine();
+        }
     }
 }

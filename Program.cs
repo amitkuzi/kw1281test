@@ -6,6 +6,7 @@ using System;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Globalization;
+using System.Linq;
 using System.Reflection;
 using System.Text.RegularExpressions;
 using System.Threading;
@@ -55,6 +56,7 @@ namespace BitFab.KW1281Test
             Log.WriteLine($".NET Version: {Environment.Version}");
             Log.WriteLine($"Culture: {CultureInfo.InstalledUICulture}");
 
+            
             if (args.Length < 4)
             {
                 ShowUsage();
@@ -228,6 +230,15 @@ namespace BitFab.KW1281Test
 
                 login = ushort.Parse(args[4]);
             }
+
+            else if (
+                string.Compare(command, "TBR1281", ignoreCase: true) == 0)
+            {
+
+                Tester.TestBestBoudRate(portName, baudRate, controllerAddress);
+                return;
+            }
+
 
             using var @interface = OpenPort(portName, baudRate);
             var tester = new Tester(@interface, controllerAddress);
