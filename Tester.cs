@@ -1082,7 +1082,7 @@ namespace BitFab.KW1281Test
                     testResults[boudRate]++;
 
                 }
-                break;
+             
             }
 
             Log.WriteLine($"Kwp1281Wakeup results");
