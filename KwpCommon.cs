@@ -69,7 +69,7 @@ namespace BitFab.KW1281Test
             {
                 GC.EndNoGCRegion();
             }
-
+            Log.WriteLine($"syncByte {syncByte}");
             if (syncByte != 0x55)
             {
                 throw new InvalidOperationException(
