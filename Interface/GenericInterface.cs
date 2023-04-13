@@ -23,6 +23,42 @@ namespace BitFab.KW1281Test.Interface
             };
 
             _port.Open();
+
+            _port.DataReceived += _port_DataReceived;
+            _port.ErrorReceived += _port_ErrorReceived;
+            _port.PinChanged += _port_PinChanged;
+        }
+
+        private void _port_PinChanged(object sender, SerialPinChangedEventArgs e)
+        {
+            Log.WriteLine($"_port_PinChanged {e.EventType}");
+        }
+
+        private void _port_ErrorReceived(object sender, SerialErrorReceivedEventArgs e)
+        {
+            Log.WriteLine($"_port_ErrorReceived {e}");
+        }
+
+        private void _port_DataReceived(object sender, SerialDataReceivedEventArgs e)
+        {
+            Log.WriteLine($"_port_DataReceived {e}");
+            byte b;
+            try
+            {
+                while (true)
+                {
+                    b = (byte)_port.ReadByte();
+                    Log.Write($"rd {b:x2} ");
+
+                }
+            }
+            catch (Exception ex) { Log.WriteLine($"rd {ex} "); }
+            
+            finally
+            {
+                Log.WriteLine($"td eol ");
+            }
+           
         }
 
         public void Dispose()
@@ -46,6 +82,7 @@ namespace BitFab.KW1281Test.Interface
         public void SetBreak(bool on)
         {
             _port.BreakState = on;
+            Log.WriteLine($"_port.BreakState =  {on}");
         }
 
         public void ClearReceiveBuffer()

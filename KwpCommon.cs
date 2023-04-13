@@ -30,49 +30,59 @@ namespace BitFab.KW1281Test
         {
             // Disable garbage collection int this time-critical method
             bool noGC = GC.TryStartNoGCRegion(1024 * 1024);
-            if (!noGC)
-            {
-                Log.WriteLine("Warning: Unable to disable GC so timing may be compromised.");
-            }
-
             byte syncByte = 0;
             const int maxTries = 3;
-            for (int i = 1; i <= maxTries; i++)
+            try
             {
-                Thread.Sleep(300);
-
-                BitBang5Baud(controllerAddress, evenParity);
-
-                // Throw away anything that might be in the receive buffer
-                Interface.ClearReceiveBuffer();
-
-                Log.WriteLine("Reading sync byte");
-                try
+                if (!noGC)
                 {
-                    syncByte = Interface.ReadByte();
-                    break;
+                    Log.WriteLine("Warning: Unable to disable GC so timing may be compromised.");
                 }
-                catch (TimeoutException)
+
+                for (int i = 1; i <= maxTries; i++)
                 {
-                    if (i < maxTries)
+                    Thread.Sleep(300);
+
+                    BitBang5Baud(controllerAddress, evenParity);
+
+                    // Throw away anything that might be in the receive buffer
+                    //Interface.ClearReceiveBuffer();
+
+                    Log.WriteLine("Reading sync byte");
+                    try
                     {
-                        Log.WriteLine("Retrying wakeup message...");
+                        syncByte = Interface.ReadByte();
+                        break;
                     }
-                    else
+                    catch (TimeoutException)
                     {
-                        throw new InvalidOperationException("Controller did not wake up.");
+                        if (i < maxTries)
+                        {
+                            Log.WriteLine("Retrying wakeup message...");
+                        }
+                        else
+                        {
+                            throw new InvalidOperationException("Controller did not wake up.");
+                        }
                     }
                 }
             }
-
-            if (noGC)
+            finally
             {
-                GC.EndNoGCRegion();
+                if (noGC)
+                {
+                    GC.EndNoGCRegion();
+                }
             }
+          
+
+
+
+          
             Log.WriteLine($"syncByte {syncByte}");
             if (syncByte != 0x55)
             {
-                throw new InvalidOperationException(
+                Log.WriteLine(
                     $"Unexpected sync byte: Expected $55, Actual ${syncByte:X2}");
             }
 

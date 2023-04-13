@@ -6,15 +6,15 @@
     },
     "kw1281test COM2": {
       "commandName": "Project",
-      "commandLineArgs": "COM2 4800 1 readsoftwareversion "
+      "commandLineArgs": "COM3 9600 1 GetSKU"
     },
     "kw1281test COM3": {
       "commandName": "Project",
-      "commandLineArgs": "COM3 4800 1 readsoftwareversion "
+      "commandLineArgs": "COM3 9600 1 readsoftwareversion "
     },
     "kw1281test TestBoudRate": {
       "commandName": "Project",
-      "commandLineArgs": "COM3 4800 1 TBR1281"
+      "commandLineArgs": "COM3 9600 1 TBR1281"
     }
   }
 }
