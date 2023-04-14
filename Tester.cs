@@ -350,13 +350,13 @@ namespace BitFab.KW1281Test
             Thread.Sleep(1000);
 
             // Now wake it up again, hopefully in KW2000 mode
-            _kwpCommon!.Interface.SetBaudRate(10400);
+            //_kwpCommon!.Interface.SetBaudRate(10400);
             var kwpVersion = _kwpCommon.WakeUp((byte)_controllerAddress, evenParity: false);
-            if (kwpVersion < 2000)
+/*            if (kwpVersion < 2000)
             {
                 throw new InvalidOperationException(
                     $"Unable to wake up ECU in KW2000 mode. KW version: {kwpVersion}");
-            }
+            }*/
             Console.WriteLine($"KW Version: {kwpVersion}");
 
             var edc15 = new Edc15VM(_kwpCommon, _controllerAddress);
@@ -1047,8 +1047,8 @@ namespace BitFab.KW1281Test
 
         internal static void TestBestBoudRate(string portName, int baudRate , int controllerAddress)
         {
-            const int length = 13;
-            var avilableBoudRate = new int[] { 10400, 9600,7200, 4800, 2400,1800,  1200 ,600 , 300 };
+            const int length = 3;
+            var avilableBoudRate = new int[] { 10400, 9600, 7200, 4800, 2400,1800,  1200 ,600 , 300 };
             var testResults = new Dictionary<int, int>() { { 10400, 0 },{ 9600,0 },{ 7200, 0 }, { 4800, 0 }, { 2400, 0 }, { 1800, 0 }, { 1200, 0 }, { 600, 0 }, { 300 ,0 }, };
             for (int i = 0; i < length; i++)
             {
@@ -1102,7 +1102,7 @@ namespace BitFab.KW1281Test
                     Console.ForegroundColor = ConsoleColor.Yellow;
                 }
 
-                Log.WriteLine($"boudrate {item.Key} : {item.Value / length *100}%");
+                Log.WriteLine($"boudrate {item.Key} : {((float)item.Value / length) *100}% { item.Value}" );
 
                 Console.ResetColor();
             }

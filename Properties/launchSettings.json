@@ -6,11 +6,11 @@
     },
     "kw1281test COM2": {
       "commandName": "Project",
-      "commandLineArgs": "COM3 9600 1 GetSKU"
+      "commandLineArgs": "COM3 10400 1 GetSKc"
     },
     "kw1281test COM3": {
       "commandName": "Project",
-      "commandLineArgs": "COM3 9600 1 readsoftwareversion "
+      "commandLineArgs": "COM3 9600 1 findlogins 13861"
     },
     "kw1281test TestBoudRate": {
       "commandName": "Project",

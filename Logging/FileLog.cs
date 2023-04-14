@@ -16,11 +16,11 @@ namespace BitFab.KW1281Test.Logging
         {
             if (dest != LogDest.File)
             {
-                Console.WriteLine(message);
+                Console.WriteLine($"{DateTime.Now.ToString("HH mm ss.fff")} " + message);
             }
             if (dest != LogDest.Console)
             {
-                _writer.WriteLine(message);
+                _writer.WriteLine($"{DateTime.Now.ToString("HH mm ss.fff")} " + message);
             }
         }
 
@@ -40,11 +40,11 @@ namespace BitFab.KW1281Test.Logging
         {
             if (dest != LogDest.File)
             {
-                Console.Write(message);
+                Console.Write($"{DateTime.Now.ToString("HH mm ss.fff")} " +message);
             }
             if (dest != LogDest.Console)
             {
-                _writer.Write(message);
+                _writer.Write($"{DateTime.Now.ToString("HH mm ss.fff")} " + message);
             }
         }
 
