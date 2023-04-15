@@ -29,15 +29,15 @@ namespace BitFab.KW1281Test
         public int WakeUp(byte controllerAddress, bool evenParity)
         {
             // Disable garbage collection int this time-critical method
-            bool noGC = GC.TryStartNoGCRegion(1024 * 1024);
+          //  bool noGC = GC.TryStartNoGCRegion(1024 * 1024);
             byte syncByte = 0;
             const int maxTries = 3;
             try
             {
-                if (!noGC)
-                {
-                    Log.WriteLine("Warning: Unable to disable GC so timing may be compromised.");
-                }
+                //if (!noGC)
+                //{
+                //    Log.WriteLine("Warning: Unable to disable GC so timing may be compromised.");
+                //}
 
                 for (int i = 1; i <= maxTries; i++)
                 {
@@ -69,14 +69,18 @@ namespace BitFab.KW1281Test
                             throw new InvalidOperationException("Controller did not wake up.");
                         }
                     }
+                    //catch (Exception ex)
+                    //{
+                    //    Log.WriteLine(ex.ToString());
+                    //}
                 }
             }
             finally
             {
-                if (noGC)
-                {
-                    GC.EndNoGCRegion();
-                }
+                //if (noGC)
+                //{
+                //    GC.EndNoGCRegion();
+                //}
             }
           
 
