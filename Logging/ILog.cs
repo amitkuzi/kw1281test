@@ -2,14 +2,14 @@
 
 namespace BitFab.KW1281Test.Logging
 {
-    internal enum LogDest
+    public enum LogDest
     {
         All,
         Console,
         File
     }
 
-    internal interface ILog : IDisposable
+    public interface ILog : IDisposable
     {
         void Write(string message, LogDest dest = LogDest.All);
 

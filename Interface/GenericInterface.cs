@@ -1,9 +1,10 @@
 ﻿using System;
 using System.IO.Ports;
+using System.Threading;
 
 namespace BitFab.KW1281Test.Interface
 {
-    class GenericInterface : IInterface
+    public class GenericInterface : IInterface
     {
         private readonly TimeSpan DefaultTimeOut = TimeSpan.FromSeconds(8);
 
@@ -24,9 +25,9 @@ namespace BitFab.KW1281Test.Interface
 
             _port.Open();
 
-            _port.DataReceived += _port_DataReceived;
+/*            _port.DataReceived += _port_DataReceived;
             _port.ErrorReceived += _port_ErrorReceived;
-            _port.PinChanged += _port_PinChanged;
+            _port.PinChanged += _port_PinChanged;*/
         }
 
         private void _port_PinChanged(object sender, SerialPinChangedEventArgs e)
@@ -70,13 +71,16 @@ namespace BitFab.KW1281Test.Interface
         public byte ReadByte()
         {
             var b = (byte)_port.ReadByte();
+            Log.WriteLine($"_ReadByte =  {b:X2}");
             return b;
         }
 
         public void WriteByteRaw(byte b)
         {
+            Thread.Sleep(5);
             _buf[0] = b;
             _port.Write(_buf, 0, 1);
+            Log.WriteLine($"WriteByteRaw =  {b:X2}");
         }
 
         public void SetBreak(bool on)

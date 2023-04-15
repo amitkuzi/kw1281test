@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace BitFab.KW1281Test.Blocks
 {
-    internal class CodingWscBlock : Block
+    public class CodingWscBlock : Block
     {
         public CodingWscBlock(List<byte> bytes) : base(bytes)
         {

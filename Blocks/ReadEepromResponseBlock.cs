@@ -2,7 +2,7 @@
 
 namespace BitFab.KW1281Test.Blocks
 {
-    internal class ReadEepromResponseBlock : Block
+    public class ReadEepromResponseBlock : Block
     {
         public ReadEepromResponseBlock(List<byte> bytes) : base(bytes)
         {

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace BitFab.KW1281Test.Blocks
 {
-    internal class WriteEepromResponseBlock : Block
+    public class WriteEepromResponseBlock : Block
     {
         public WriteEepromResponseBlock(List<byte> bytes) : base(bytes)
         {

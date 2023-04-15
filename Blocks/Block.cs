@@ -6,7 +6,7 @@ namespace BitFab.KW1281Test.Blocks
     /// <summary>
     /// KWP1281 block
     /// </summary>
-    class Block
+    public class Block
     {
         public Block(List<byte> bytes)
         {

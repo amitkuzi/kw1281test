@@ -13,7 +13,7 @@ using System.Threading;
 
 namespace BitFab.KW1281Test
 {
-    class Program
+    public class Program
     {
         public static ILog Log { get; private set; } = new ConsoleLog();
 
@@ -397,7 +397,7 @@ namespace BitFab.KW1281Test
         /// </param>
         /// <param name="baudRate"></param>
         /// <returns></returns>
-        private static IInterface OpenPort(string portName, int baudRate)
+        public static IInterface OpenPort(string portName, int baudRate)
         {
             if (Regex.IsMatch(portName.ToUpper(), @"\A[A-Z0-9]{8}\Z"))
             {

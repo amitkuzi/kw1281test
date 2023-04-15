@@ -2,7 +2,7 @@
 
 namespace BitFab.KW1281Test.Blocks
 {
-    internal class AdaptationResponseBlock : Block
+    public class AdaptationResponseBlock : Block
     {
         public AdaptationResponseBlock(List<byte> bytes) : base(bytes)
         {

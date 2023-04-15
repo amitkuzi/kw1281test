@@ -3,7 +3,7 @@ using System.IO;
 
 namespace BitFab.KW1281Test.Logging
 {
-    internal class FileLog : ILog
+    public class FileLog : ILog
     {
         private readonly StreamWriter _writer;
 

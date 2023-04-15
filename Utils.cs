@@ -4,7 +4,7 @@ using System.Text;
 
 namespace BitFab.KW1281Test
 {
-    internal static class Utils
+    public static class Utils
     {
         public static string Dump(IEnumerable<byte> bytes)
         {

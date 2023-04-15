@@ -1,6 +1,6 @@
 ﻿namespace BitFab.KW1281Test.Cluster
 {
-    internal interface ICluster
+    public interface ICluster
     {
         void UnlockForEepromReadWrite();
 

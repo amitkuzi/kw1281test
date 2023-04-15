@@ -8,7 +8,7 @@ using Service = BitFab.KW1281Test.Kwp2000.DiagnosticService;
 
 namespace BitFab.KW1281Test
 {
-    internal class KW2000Dialog
+    public class KW2000Dialog
     {
         private const byte _testerAddress = 0xF1;
 

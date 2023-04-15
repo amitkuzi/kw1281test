@@ -11,7 +11,7 @@ using static BitFab.KW1281Test.Interface.FT;
 
 namespace BitFab.KW1281Test
 {
-    internal class Tester
+    public class Tester
     {
         private readonly IKwpCommon _kwpCommon;
         private readonly IKW1281Dialog _kwp1281;
@@ -1045,7 +1045,7 @@ namespace BitFab.KW1281Test
             return (b1, b2);
         }
 
-        internal static void TestBestBoudRate(string portName, int baudRate , int controllerAddress)
+        public static void TestBestBoudRate(string portName, int baudRate , int controllerAddress)
         {
             const int length = 3;
             var avilableBoudRate = new int[] { 10400, 9600, 7200, 4800, 2400,1800,  1200 ,600 , 300 };

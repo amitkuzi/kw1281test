@@ -2,7 +2,7 @@
 
 namespace BitFab.KW1281Test.Blocks
 {
-    internal class ActuatorTestResponseBlock : Block
+    public class ActuatorTestResponseBlock : Block
     {
         public ActuatorTestResponseBlock(List<byte> bytes) : base(bytes)
         {

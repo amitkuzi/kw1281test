@@ -2,7 +2,7 @@
 
 namespace BitFab.KW1281Test.Logging
 {
-    internal class ConsoleLog : ILog
+    public class ConsoleLog : ILog
     {
         public void Write(string message, LogDest dest)
         {

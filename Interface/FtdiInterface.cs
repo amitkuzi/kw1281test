@@ -462,7 +462,7 @@ namespace BitFab.KW1281Test.Interface
     }
 
     [AttributeUsage(AttributeTargets.Delegate)]
-    internal class SymbolNameAttribute : Attribute
+    public class SymbolNameAttribute : Attribute
     {
         public SymbolNameAttribute(string name)
         {

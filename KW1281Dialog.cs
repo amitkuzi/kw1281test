@@ -12,7 +12,7 @@ namespace BitFab.KW1281Test
     /// <summary>
     /// Manages a dialog with a VW controller using the KW1281 protocol.
     /// </summary>
-    internal interface IKW1281Dialog
+    public interface IKW1281Dialog
     {
         ControllerInfo Connect();
 
@@ -83,7 +83,7 @@ namespace BitFab.KW1281Test
         public IKwpCommon KwpCommon { get; }
     }
 
-    internal class KW1281Dialog : IKW1281Dialog
+    public class KW1281Dialog : IKW1281Dialog
     {
         public ControllerInfo Connect()
         {
@@ -348,12 +348,22 @@ namespace BitFab.KW1281Test
 
             while (true)
             {
-                var block = ReceiveBlock();
-                blocks.Add(block); // TODO: Maybe don't add the block if it's an Ack
-                if (block is AckBlock || block is NakBlock)
+                try
                 {
+                    var block = ReceiveBlock();
+                    blocks.Add(block); // TODO: Maybe don't add the block if it's an Ack
+                    if (block is AckBlock || block is NakBlock)
+                    {
+                        break;
+                    }
+                }
+                catch (System.IO.IOException ex) 
+                {
+                    Log.WriteLine(ex.Message);
                     break;
                 }
+
+              
                 SendAckBlock();
             }
 
@@ -389,8 +399,12 @@ namespace BitFab.KW1281Test
             blockBytes.Add(blockEnd);
             if (blockEnd != 0x03)
             {
-                throw new InvalidOperationException(
-                    $"Received block end ${blockEnd:X2} but expected $03");
+                 
+                while (0x03 != (blockEnd = KwpCommon.ReadByte()))
+                {
+                    blockBytes.Add(blockEnd);
+                }
+
             }
 
             return (BlockTitle)blockTitle switch
@@ -440,9 +454,9 @@ namespace BitFab.KW1281Test
         private byte ReadAndAckByte()
         {
             var b = KwpCommon.ReadByte();
-            Thread.Sleep(1);
-            var complement = (byte)~b;
-            KwpCommon.WriteByte(complement);
+            Thread.Sleep(5);
+            //var complement = (byte)~b;
+            //KwpCommon.WriteByte(complement);
             return b;
         }
 
@@ -799,7 +813,7 @@ namespace BitFab.KW1281Test
     /// Used for commands such as ActuatorTest which need to be kept alive with ACKs while waiting
     /// for user input.
     /// </summary>
-    internal class KW1281KeepAlive : IDisposable
+    public class KW1281KeepAlive : IDisposable
     {
         private readonly IKW1281Dialog _kw1281Dialog;
         private volatile bool _cancel = false;

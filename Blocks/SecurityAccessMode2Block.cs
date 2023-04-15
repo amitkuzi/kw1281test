@@ -2,7 +2,7 @@
 
 namespace BitFab.KW1281Test.Blocks
 {
-    internal class SecurityAccessMode2Block : Block
+    public class SecurityAccessMode2Block : Block
     {
         public SecurityAccessMode2Block(List<byte> bytes) : base(bytes)
         {

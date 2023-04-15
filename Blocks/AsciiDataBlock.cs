@@ -4,7 +4,7 @@ using System.Text;
 
 namespace BitFab.KW1281Test.Blocks
 {
-    internal class AsciiDataBlock : Block
+    public class AsciiDataBlock : Block
     {
         public AsciiDataBlock(List<byte> bytes) : base(bytes)
         {

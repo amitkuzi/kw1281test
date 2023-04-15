@@ -5,7 +5,7 @@ using System.Text;
 
 namespace BitFab.KW1281Test.Blocks
 {
-    internal class GroupReadResponseWithTextBlock : Block
+    public class GroupReadResponseWithTextBlock : Block
     {
         public GroupReadResponseWithTextBlock(List<byte> bytes)
             : base(bytes)

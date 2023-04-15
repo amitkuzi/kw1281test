@@ -8,7 +8,7 @@ namespace BitFab.KW1281Test
     /// <summary>
     /// The info returned when a controller wakes up.
     /// </summary>
-    internal class ControllerInfo
+    public class ControllerInfo
     {
         public ControllerInfo(IEnumerable<Block> blocks)
         {

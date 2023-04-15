@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace BitFab.KW1281Test.Cluster
 {
-    internal class MotometerBOOCluster : ICluster
+    public class MotometerBOOCluster : ICluster
     {
         public void UnlockForEepromReadWrite()
         {

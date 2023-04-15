@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace BitFab.KW1281Test.Blocks
 {
-    internal class FaultCodesBlock : Block
+    public class FaultCodesBlock : Block
     {
         public FaultCodesBlock(List<byte> bytes) : base(bytes)
         {
@@ -35,7 +35,7 @@ namespace BitFab.KW1281Test.Blocks
         public List<FaultCode> FaultCodes { get; }
     }
 
-    internal struct FaultCode
+    public struct FaultCode
     {
         public FaultCode(int dtc, int status)
         {

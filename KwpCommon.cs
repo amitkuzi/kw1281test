@@ -22,7 +22,7 @@ namespace BitFab.KW1281Test
         void ReadComplement(byte b);
     }
 
-    class KwpCommon : IKwpCommon
+    public class KwpCommon : IKwpCommon
     {
         public IInterface Interface { get; }
 
@@ -46,12 +46,16 @@ namespace BitFab.KW1281Test
                     BitBang5Baud(controllerAddress, evenParity);
 
                     // Throw away anything that might be in the receive buffer
-                    //Interface.ClearReceiveBuffer();
+                    Interface.ClearReceiveBuffer();
 
                     Log.WriteLine("Reading sync byte");
                     try
                     {
-                        syncByte = Interface.ReadByte();
+                        while (syncByte != 0x55)
+                        {
+                            syncByte = Interface.ReadByte();
+                            Log.WriteLine($"waiting for WakeUp 0x55 {syncByte:X2}");
+                        }
                         break;
                     }
                     catch (TimeoutException)
@@ -95,7 +99,15 @@ namespace BitFab.KW1281Test
             Thread.Sleep(25);
 
             var complement = (byte)~keywordMsb;
-            WriteByte(complement);
+
+            Interface.WriteByteRaw(complement);
+            var ackComplet = Interface.ReadByte();
+            while(ackComplet != complement)
+            {
+                Log.WriteLine($"ackComplet {ackComplet} - {complement}");
+                Thread.Sleep(100);
+                ackComplet = Interface.ReadByte();
+            }
 
             var protocolVersion = ((keywordMsb & 0x7F) << 7) + (keywordLsb & 0x7F);
             Log.WriteLine($"Protocol is KW {protocolVersion} (8N1)");

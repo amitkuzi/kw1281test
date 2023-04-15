@@ -2,7 +2,7 @@
 
 namespace BitFab.KW1281Test.Blocks
 {
-    internal class UnknownBlock : Block
+    public class UnknownBlock : Block
     {
         public UnknownBlock(List<byte> bytes) : base(bytes)
         {

@@ -2,7 +2,7 @@
 
 namespace BitFab.KW1281Test.Blocks
 {
-    internal class CustomBlock : Block
+    public class CustomBlock : Block
     {
         public CustomBlock(List<byte> bytes) : base(bytes)
         {
