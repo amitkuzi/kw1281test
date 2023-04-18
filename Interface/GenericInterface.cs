@@ -51,7 +51,7 @@ namespace BitFab.KW1281Test.Interface
             var read = _port.Read(readBuff, 0, byteToRead);
             if (read != byteToRead) Log.WriteLine("read wrong amount ");
             readBuff.ToList().ForEach(b => _queue.Enqueue(b));
-            Log.WriteLine($"_port_DataReceived  _queue = {String.Join(" ", _queue)}");
+            Log.WriteLine($"_port_DataReceived  _queue = {String.Join(" ", _queue):X2}");
         }
 
         public void Dispose()
