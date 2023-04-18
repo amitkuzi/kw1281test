@@ -6,7 +6,7 @@
     },
     "kw1281test COM2": {
       "commandName": "Project",
-      "commandLineArgs": "COM3 10400 1 GetSKc"
+      "commandLineArgs": "COM2 600 1 GetSKc"
     },
     "kw1281test COM3": {
       "commandName": "Project",
@@ -15,6 +15,10 @@
     "kw1281test TestBoudRate": {
       "commandName": "Project",
       "commandLineArgs": "COM3 9600 1 TBR1281"
+    },
+    "GetSKc  com3 600 ": {
+      "commandName": "Project",
+      "commandLineArgs": "COM3 9600 1 GetSKc"
     }
   }
 }

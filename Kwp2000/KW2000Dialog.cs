@@ -119,16 +119,28 @@ namespace BitFab.KW1281Test
 
             while (true)
             {
-                var message = ReceiveMessage();
+                Kwp2000Message message = null;
+
+                try
+                {
+                    Thread.Sleep(10);
+                    message = ReceiveMessage();
+                }
+                catch (IOException ioex) 
+                {
+                    Log.WriteLine($"IOException at send Kwp2000Message {service} {ioex} ");
+                    SendMessage(service, body, excludeAddresses);
+                    continue;
+                }
 
                 if (message.SrcAddress.HasValue)
                 {
-                    if (message.SrcAddress != _controllerAddress)
+                    if (message.SrcAddress != _testerAddress)
                     {
                         throw new InvalidOperationException($"Unexpected SrcAddress: {message.SrcAddress:X2}");
                     }
 
-                    if (message.DestAddress != _testerAddress)
+                    if (message.DestAddress != _controllerAddress)
                     {
                         throw new InvalidOperationException($"Unexpected DestAddress: {message.DestAddress:X2}");
                     }
@@ -144,10 +156,10 @@ namespace BitFab.KW1281Test
                     throw new NegativeResponseException(message);
                 }
 
-                if (!message.IsPositiveResponse(service))
+              /*  if (!message.IsPositiveResponse(service))
                 {
                     throw new InvalidOperationException($"Unexpected response: {message.Service}");
-                }
+                }*/
 
                 return message;
             }

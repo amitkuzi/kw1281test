@@ -1,13 +1,15 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO.Ports;
+using System.Linq;
 using System.Threading;
 
 namespace BitFab.KW1281Test.Interface
 {
     public class GenericInterface : IInterface
     {
-        private readonly TimeSpan DefaultTimeOut = TimeSpan.FromSeconds(8);
-
+        private readonly TimeSpan DefaultTimeOut = TimeSpan.FromSeconds(4);
+        private readonly Queue<byte> _queue = new Queue<byte>();
         public GenericInterface(string portName, int baudRate)
         {
             _port = new SerialPort(portName)
@@ -25,9 +27,9 @@ namespace BitFab.KW1281Test.Interface
 
             _port.Open();
 
-/*            _port.DataReceived += _port_DataReceived;
+            _port.DataReceived += _port_DataReceived;
             _port.ErrorReceived += _port_ErrorReceived;
-            _port.PinChanged += _port_PinChanged;*/
+            _port.PinChanged += _port_PinChanged;
         }
 
         private void _port_PinChanged(object sender, SerialPinChangedEventArgs e)
@@ -37,29 +39,19 @@ namespace BitFab.KW1281Test.Interface
 
         private void _port_ErrorReceived(object sender, SerialErrorReceivedEventArgs e)
         {
-            Log.WriteLine($"_port_ErrorReceived {e}");
+            Log.WriteLine($"_port_ErrorReceived {e.EventType}");
         }
 
         private void _port_DataReceived(object sender, SerialDataReceivedEventArgs e)
         {
-            Log.WriteLine($"_port_DataReceived {e}");
-            byte b;
-            try
-            {
-                while (true)
-                {
-                    b = (byte)_port.ReadByte();
-                    Log.Write($"rd {b:x2} ");
+            Log.WriteLine($"_port_DataReceived {e.EventType}");
 
-                }
-            }
-            catch (Exception ex) { Log.WriteLine($"rd {ex} "); }
-            
-            finally
-            {
-                Log.WriteLine($"td eol ");
-            }
-           
+            var byteToRead = _port.BytesToRead;
+            var readBuff = new byte[byteToRead];
+            var read = _port.Read(readBuff, 0, byteToRead);
+            if (read != byteToRead) Log.WriteLine("read wrong amount ");
+            readBuff.ToList().ForEach(b => _queue.Enqueue(b));
+            Log.WriteLine($"_port_DataReceived  _queue = {String.Join(" ", _queue)}");
         }
 
         public void Dispose()
@@ -70,7 +62,16 @@ namespace BitFab.KW1281Test.Interface
 
         public byte ReadByte()
         {
-            var b = (byte)_port.ReadByte();
+            byte b;
+            Log.WriteLine($"_ReadByte  _queue = {String.Join(" ", _queue)}");
+            if (_queue.Any())
+            {
+                b = _queue.Dequeue();
+            }
+            else
+            {
+                b = (byte)_port.ReadByte();
+            }
             Log.WriteLine($"_ReadByte =  {b:X2}");
             return b;
         }

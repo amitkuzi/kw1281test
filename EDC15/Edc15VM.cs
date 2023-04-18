@@ -13,8 +13,15 @@ namespace BitFab.KW1281Test.EDC15
         public void DumpEeprom(string filename)
         {
             var kwp2000 = new KW2000Dialog(_kwpCommon, (byte)_controllerAddress);
+            var kwp1281 = new KW1281Dialog(_kwpCommon );
 
-            var resp = kwp2000.SendReceive(DiagnosticService.startDiagnosticSession, new byte[] { 0x89 });
+            kwp1281.Connect();
+
+            var ramByts = kwp1281.ReadRam(0, 64);
+
+            Kwp2000Message resp = null;
+
+            resp = kwp2000.SendReceive(DiagnosticService.startDiagnosticSession, new byte[] { 0x89 });
 
             resp = kwp2000.SendReceive(DiagnosticService.startDiagnosticSession, new byte[] { 0x85 });
 

@@ -401,12 +401,12 @@ namespace BitFab.KW1281Test
         {
             if (Regex.IsMatch(portName.ToUpper(), @"\A[A-Z0-9]{8}\Z"))
             {
-                Log.WriteLine($"Opening FTDI serial port {portName}");
+                Log.WriteLine($"Opening FTDI serial port {portName}:{baudRate}");
                 return new FtdiInterface(portName, baudRate);
             }
             else
             {
-                Log.WriteLine($"Opening serial port {portName}");
+                Log.WriteLine($"Opening serial port {portName}:{baudRate}");
                 return new GenericInterface(portName, baudRate);
             }
         }

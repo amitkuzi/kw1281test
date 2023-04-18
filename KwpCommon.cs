@@ -69,10 +69,10 @@ namespace BitFab.KW1281Test
                             throw new InvalidOperationException("Controller did not wake up.");
                         }
                     }
-                    //catch (Exception ex)
-                    //{
-                    //    Log.WriteLine(ex.ToString());
-                    //}
+                    catch (Exception ex)
+                    {
+                        Log.WriteLine(ex.ToString());
+                    }
                 }
             }
             finally
@@ -138,10 +138,11 @@ namespace BitFab.KW1281Test
         {
             var expectedComplement = (byte)~b;
             var actualComplement = Interface.ReadByte();
-            if (actualComplement != expectedComplement)
+            while (actualComplement != expectedComplement)
             {
-                throw new InvalidOperationException(
-                    $"Received complement ${actualComplement:X2} but expected ${expectedComplement:X2}");
+                Thread.Sleep(10);
+                Log.WriteLine($"Received complement ${actualComplement:X2} but expected ${expectedComplement:X2}");
+                if (++b > 20) return;
             }
         }
 
@@ -166,15 +167,15 @@ namespace BitFab.KW1281Test
             {
                 while (Stopwatch.GetTimestamp() < maxTick)
                     ;
-                if (bit)
-                {
-                    Interface.SetBreak(false);
-                }
-                else
-                {
-                    Interface.SetBreak(true);
-                }
-
+                /*   if (bit)
+                   {
+                       Interface.SetBreak(false);
+                   }
+                   else
+                   {
+                       Interface.SetBreak(true);
+                   }*/
+                Interface.SetBreak(!bit);
                 maxTick += ticksPerBit;
             }
 

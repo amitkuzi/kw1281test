@@ -455,8 +455,8 @@ namespace BitFab.KW1281Test
         {
             var b = KwpCommon.ReadByte();
             Thread.Sleep(5);
-            //var complement = (byte)~b;
-            //KwpCommon.WriteByte(complement);
+            var complement = (byte)~b;
+            KwpCommon.WriteByte(complement);
             return b;
         }
 

@@ -350,7 +350,7 @@ namespace BitFab.KW1281Test
             Thread.Sleep(1000);
 
             // Now wake it up again, hopefully in KW2000 mode
-            //_kwpCommon!.Interface.SetBaudRate(10400);
+           // _kwpCommon!.Interface.SetBaudRate(10400);
             var kwpVersion = _kwpCommon.WakeUp((byte)_controllerAddress, evenParity: false);
 /*            if (kwpVersion < 2000)
             {
